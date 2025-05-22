@@ -10,12 +10,18 @@
 <body class="bg-gray-100 min-h-screen">
     <!-- NAVBAR -->
     <nav class="bg-white shadow p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Desafío 2 DSS</h1>
+        <h1 class="text-xl font-bold">Desafío 3 DSS</h1>
 
-        <a href="index.html" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg shadow">
+        <a href="{{ url('/') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg shadow">
             Ir a Inicio
         </a>
     </nav>
+
+    <!-- ALERTA -->
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative m-4" role="alert">
+        <strong class="font-bold">¡Hermanos!</strong>
+        <span class="block sm:inline">Que significa el bro respeta</span>
+    </div>
 
     <div class="max-w-5xl mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Finalizar Compra</h1>
