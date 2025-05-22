@@ -51,7 +51,7 @@
                     </tbody>
                 </table>
                 <div class="mt-4 text-right">
-                    <a href="checkout.php"
+                    <a href="{{ url('/checkout') }}"
                         class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded">
                         Ir al Pago
                     </a>
@@ -69,45 +69,13 @@
     <!-- LANDING -->
     <div class="max-w-7xl mx-auto mt-10 p-4">
         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Productos destacados</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
 
-            <!-- PRODUCTOS DE PRUEBA -->
-            <!-- Producto -->
+        <!-- CATEGORÍA 1: Tecnología -->
+        <h3 class="text-xl font-semibold mb-4 mt-10">Tecnología</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <!-- Productos ordenados por precio -->
             <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Producto 1"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Zapatillas Urbanas</h3>
-                <p class="text-gray-700">Precio: $29.990</p>
-                <p class="text-gray-500 text-sm">Stock: 10 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Producto 2"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Audífonos Bluetooth</h3>
-                <p class="text-gray-700">Precio: $14.990</p>
-                <p class="text-gray-500 text-sm">Stock: 25 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Producto 3"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Mochila Antirrobo</h3>
-                <p class="text-gray-700">Precio: $22.500</p>
-                <p class="text-gray-500 text-sm">Stock: 12 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Producto 4"
+                <img src="https://via.placeholder.com/300x200" alt="Lámpara LED"
                     class="w-full h-60 object-cover rounded-md mb-2">
                 <h3 class="font-semibold text-lg">Lámpara LED Escritorio</h3>
                 <p class="text-gray-700">Precio: $9.990</p>
@@ -118,7 +86,18 @@
             </div>
 
             <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Producto 5"
+                <img src="https://via.placeholder.com/300x200" alt="Audífonos"
+                    class="w-full h-60 object-cover rounded-md mb-2">
+                <h3 class="font-semibold text-lg">Audífonos Bluetooth</h3>
+                <p class="text-gray-700">Precio: $14.990</p>
+                <p class="text-gray-500 text-sm">Stock: 25 unidades</p>
+                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
+                    Agregar al carrito
+                </button>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="https://via.placeholder.com/300x200" alt="Teclado"
                     class="w-full h-60 object-cover rounded-md mb-2">
                 <h3 class="font-semibold text-lg">Teclado Mecánico RGB</h3>
                 <p class="text-gray-700">Precio: $39.990</p>
@@ -127,9 +106,35 @@
                     Agregar al carrito
                 </button>
             </div>
+        </div>
+
+        <!-- CATEGORÍA 2: Moda -->
+        <h3 class="text-xl font-semibold mb-4 mt-10">Moda</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="https://via.placeholder.com/300x200" alt="Zapatillas"
+                    class="w-full h-60 object-cover rounded-md mb-2">
+                <h3 class="font-semibold text-lg">Zapatillas Urbanas</h3>
+                <p class="text-gray-700">Precio: $29.990</p>
+                <p class="text-gray-500 text-sm">Stock: 10 unidades</p>
+                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
+                    Agregar al carrito
+                </button>
+            </div>
 
             <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Producto 6"
+                <img src="https://via.placeholder.com/300x200" alt="Mochila"
+                    class="w-full h-60 object-cover rounded-md mb-2">
+                <h3 class="font-semibold text-lg">Mochila Antirrobo</h3>
+                <p class="text-gray-700">Precio: $22.500</p>
+                <p class="text-gray-500 text-sm">Stock: 12 unidades</p>
+                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
+                    Agregar al carrito
+                </button>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="https://via.placeholder.com/300x200" alt="Smartwatch"
                     class="w-full h-60 object-cover rounded-md mb-2">
                 <h3 class="font-semibold text-lg">Smartwatch Fitness</h3>
                 <p class="text-gray-700">Precio: $49.990</p>
@@ -139,7 +144,45 @@
                 </button>
             </div>
         </div>
+
+        <!-- CATEGORÍA 3: Hogar -->
+        <h3 class="text-xl font-semibold mb-4 mt-10">Hogar</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="https://via.placeholder.com/300x200" alt="Cafetera"
+                    class="w-full h-60 object-cover rounded-md mb-2">
+                <h3 class="font-semibold text-lg">Cafetera Italiana</h3>
+                <p class="text-gray-700">Precio: $8.990</p>
+                <p class="text-gray-500 text-sm">Stock: 15 unidades</p>
+                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
+                    Agregar al carrito
+                </button>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="https://via.placeholder.com/300x200" alt="Tostadora"
+                    class="w-full h-60 object-cover rounded-md mb-2">
+                <h3 class="font-semibold text-lg">Tostadora 2 Rebanadas</h3>
+                <p class="text-gray-700">Precio: $13.990</p>
+                <p class="text-gray-500 text-sm">Stock: 18 unidades</p>
+                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
+                    Agregar al carrito
+                </button>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+                <img src="https://via.placeholder.com/300x200" alt="Parlante"
+                    class="w-full h-60 object-cover rounded-md mb-2">
+                <h3 class="font-semibold text-lg">Parlante Inalámbrico</h3>
+                <p class="text-gray-700">Precio: $24.990</p>
+                <p class="text-gray-500 text-sm">Stock: 20 unidades</p>
+                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
     </div>
+
 
     <script>
         const btn = document.getElementById('carritoBtn');
