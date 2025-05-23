@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Tienda E-Commerce</title>
     @vite('resources/css/app.css')
 </head>
+
 <body class="bg-stone-100">
     <nav class="bg-white shadow p-4 flex justify-between items-center">
         <h1 class="text-xl font-bold text-gray-800">Desafío 3 DSS</h1>
         <div class="relative">
             <button id="carritoBtn" class="relative text-2xl">🛒
-                <span class="bg-red-500 text-white text-xs rounded-full px-2 absolute -top-2 -right-3">{{ count($carrito ?? []) }}</span>
+                <span
+                    class="bg-red-500 text-white text-xs rounded-full px-2 absolute -top-2 -right-3">{{ count($carrito ?? []) }}</span>
             </button>
             <div id="carritoDropdown"
                 class="hidden absolute right-0 mt-2 w-[25rem] md:w-[40rem] bg-white border rounded-lg shadow-lg z-50 p-4 max-h-96 overflow-auto">
@@ -61,7 +64,7 @@
 
     </nav>
 
-        <!-- ALERTA -->
+    <!-- ALERTA -->
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative m-4" role="alert">
             <strong class="font-bold">¡Listo!</strong>
@@ -71,10 +74,13 @@
 
     <div class="max-w-7xl mx-auto mt-10 p-4">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Nuestros Productos</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @foreach ($productos as $categoriaNombre => $productosCategoria)
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ $categoriaNombre }}</h2>
 
+        @foreach ($productos as $categoriaNombre => $productosCategoria)
+            <!-- Nombre de la categoría -->
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{{ $categoriaNombre }}</h2>
+
+            <!-- Grid de productos de la categoría -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach ($productosCategoria as $producto)
                     <div class="bg-white rounded-lg shadow p-4">
                         <img src="{{ asset('img/' . $producto->imagen) }}" alt="{{ $producto->nombre }}"
@@ -89,16 +95,16 @@
                             <input type="hidden" name="precio" value="{{ $producto->precio }}">
                             <input type="hidden" name="stock" value="{{ $producto->stock }}">
                             <input type="hidden" name="imagen" value="{{ $producto->imagen }}">
-                            <button type="submit"
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
                                 Agregar al Carrito
                             </button>
                         </form>
                     </div>
                 @endforeach
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
+
 
     <script>
         document.getElementById('carritoBtn').addEventListener('click', function () {
@@ -106,4 +112,5 @@
         });
     </script>
 </body>
+
 </html>
