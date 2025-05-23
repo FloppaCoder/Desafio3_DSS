@@ -1,195 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    @vite('resources/css/app.css')
     <title>Tienda E-Commerce</title>
+    @vite('resources/css/app.css')
 </head>
-
 <body class="bg-stone-100">
-
-    <!-- NAVBAR -->
     <nav class="bg-white shadow p-4 flex justify-between items-center">
         <h1 class="text-xl font-bold text-gray-800">Desafío 3 DSS</h1>
         <div class="relative">
-            <button id="carritoBtn" class="relative text-2xl">
-                🛒
-                <span class="bg-red-500 text-white text-xs rounded-full px-2 absolute -top-2 -right-3">2</span>
+            <button id="carritoBtn" class="relative text-2xl">🛒
+                <span class="bg-red-500 text-white text-xs rounded-full px-2 absolute -top-2 -right-3">{{ count($carrito ?? []) }}</span>
             </button>
             <div id="carritoDropdown"
                 class="hidden absolute right-0 mt-2 w-[25rem] md:w-[40rem] bg-white border rounded-lg shadow-lg z-50 p-4 max-h-96 overflow-auto">
-                <p class="text-sm text-gray-600">Tu carrito está vacío</p>
-                <table class="w-full text-sm text-left">
-                    <thead>
-                        <tr class="text-gray-600 border-b">
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Unidades</th>
-                            <th>Total</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="flex items-center gap-2">
-                                <img src="https://via.placeholder.com/40" alt="img"
-                                    class="w-10 h-10 object-cover rounded">
-                                <span>Ejemplo</span>
-                            </td>
-                            <td>$9.990</td>
-                            <td>
-                                <div class="flex items-center gap-2">
-                                    <button class="text-gray-700 font-bold text-lg px-2 border">−</button>
-                                    <span>1</span>
-                                    <button class="text-gray-700 font-bold text-lg px-2 border">+</button>
+                @if (!empty($carrito))
+                    @foreach ($carrito as $id => $item)
+                        <div class="flex items-center border-b border-gray-200 py-2">
+                            <img src="{{ asset('img/' . $item['imagen']) }}" class="w-12 h-12 object-cover rounded mr-2">
+                            <div class="flex-1">
+                                <h2 class="text-sm font-bold">{{ $item['nombre'] }}</h2>
+                                <div class="flex items-center gap-2 text-xs text-gray-500">
+                                    <form action="{{ route('carrito.eliminar') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="eliminar_id" value="{{ $id }}">
+                                        <button type="submit"
+                                            class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">−</button>
+                                    </form>
+
+                                    <span>Cantidad: {{ $item['cantidad'] }}</span>
+
+                                    <form action="{{ route('carrito.agregar') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="producto_id" value="{{ $id }}">
+                                        <input type="hidden" name="nombre" value="{{ $item['nombre'] }}">
+                                        <input type="hidden" name="precio" value="{{ $item['precio'] }}">
+                                        <input type="hidden" name="stock" value="{{ $item['stock'] }}">
+                                        <input type="hidden" name="imagen" value="{{ $item['imagen'] }}">
+                                        <button type="submit"
+                                            class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">+</button>
+                                    </form>
                                 </div>
-                            </td>
-                            <td>$9.990</td>
-                            <td><button class="text-red-500 hover:underline text-sm">Eliminar</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="mt-4 text-right">
-                    <a href="{{ url('/checkout') }}"
-                        class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded">
-                        Ir al Pago
-                    </a>
-                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold">${{ number_format($item['precio'], 2) }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="mt-4 text-right">
+                        <a href="{{ url('/checkout') }}"
+                            class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded">
+                            Ir al Pago
+                        </a>
+                    </div>
+                @else
+                    <p class="text-sm text-gray-600">Tu carrito está vacío</p>
+                @endif
             </div>
         </div>
+
     </nav>
 
-    <!-- ALERTA -->
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative m-4" role="alert">
-        <strong class="font-bold">¡Hermanos!</strong>
-        <span class="block sm:inline">Que significa el bro respeta</span>
-    </div>
+        <!-- ALERTA -->
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative m-4" role="alert">
+            <strong class="font-bold">¡Listo!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
 
-    <!-- LANDING -->
     <div class="max-w-7xl mx-auto mt-10 p-4">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Productos destacados</h2>
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Nuestros Productos</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @foreach ($productos as $categoriaNombre => $productosCategoria)
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ $categoriaNombre }}</h2>
 
-        <!-- CATEGORÍA 1: Tecnología -->
-        <h3 class="text-xl font-semibold mb-4 mt-10">Tecnología</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <!-- Productos ordenados por precio -->
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Lámpara LED"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Lámpara LED Escritorio</h3>
-                <p class="text-gray-700">Precio: $9.990</p>
-                <p class="text-gray-500 text-sm">Stock: 30 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
+                @foreach ($productosCategoria as $producto)
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <img src="{{ asset('img/' . $producto->imagen) }}" alt="{{ $producto->nombre }}"
+                            class="w-full h-48 object-cover rounded mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">{{ $producto->nombre }}</h3>
+                        <p class="text-gray-600">${{ number_format($producto->precio, 2) }}</p>
 
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Audífonos"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Audífonos Bluetooth</h3>
-                <p class="text-gray-700">Precio: $14.990</p>
-                <p class="text-gray-500 text-sm">Stock: 25 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Teclado"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Teclado Mecánico RGB</h3>
-                <p class="text-gray-700">Precio: $39.990</p>
-                <p class="text-gray-500 text-sm">Stock: 8 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-        </div>
-
-        <!-- CATEGORÍA 2: Moda -->
-        <h3 class="text-xl font-semibold mb-4 mt-10">Moda</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Zapatillas"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Zapatillas Urbanas</h3>
-                <p class="text-gray-700">Precio: $29.990</p>
-                <p class="text-gray-500 text-sm">Stock: 10 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Mochila"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Mochila Antirrobo</h3>
-                <p class="text-gray-700">Precio: $22.500</p>
-                <p class="text-gray-500 text-sm">Stock: 12 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Smartwatch"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Smartwatch Fitness</h3>
-                <p class="text-gray-700">Precio: $49.990</p>
-                <p class="text-gray-500 text-sm">Stock: 5 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-        </div>
-
-        <!-- CATEGORÍA 3: Hogar -->
-        <h3 class="text-xl font-semibold mb-4 mt-10">Hogar</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Cafetera"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Cafetera Italiana</h3>
-                <p class="text-gray-700">Precio: $8.990</p>
-                <p class="text-gray-500 text-sm">Stock: 15 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Tostadora"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Tostadora 2 Rebanadas</h3>
-                <p class="text-gray-700">Precio: $13.990</p>
-                <p class="text-gray-500 text-sm">Stock: 18 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
-                <img src="https://via.placeholder.com/300x200" alt="Parlante"
-                    class="w-full h-60 object-cover rounded-md mb-2">
-                <h3 class="font-semibold text-lg">Parlante Inalámbrico</h3>
-                <p class="text-gray-700">Precio: $24.990</p>
-                <p class="text-gray-500 text-sm">Stock: 20 unidades</p>
-                <button class="mt-3 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm w-full">
-                    Agregar al carrito
-                </button>
-            </div>
+                        <form action="{{ route('carrito.agregar') }}" method="POST" class="mt-4">
+                            @csrf
+                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                            <input type="hidden" name="nombre" value="{{ $producto->nombre }}">
+                            <input type="hidden" name="precio" value="{{ $producto->precio }}">
+                            <input type="hidden" name="stock" value="{{ $producto->stock }}">
+                            <input type="hidden" name="imagen" value="{{ $producto->imagen }}">
+                            <button type="submit"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                                Agregar al Carrito
+                            </button>
+                        </form>
+                    </div>
+                @endforeach
+            @endforeach
         </div>
     </div>
-
 
     <script>
-        const btn = document.getElementById('carritoBtn');
-        const dropdown = document.getElementById('carritoDropdown');
-        btn.addEventListener('click', () => dropdown.classList.toggle('hidden'));
+        document.getElementById('carritoBtn').addEventListener('click', function () {
+            document.getElementById('carritoDropdown').classList.toggle('hidden');
+        });
     </script>
-
 </body>
-
 </html>
