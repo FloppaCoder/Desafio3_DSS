@@ -26,7 +26,7 @@
     @endif
 
     @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 mt-5 mx-2">
             <ul class="list-disc list-inside">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -85,47 +85,45 @@
         </div>
 
         <!-- Formulario de Pago -->
-        <form action="{{ route('checkout.procesar') }}" method="POST" class="bg-white rounded-xl shadow p-6 space-y-4" onsubmit="return validarFormulario()">
+        <form action="{{ route('checkout.procesar') }}" method="POST" class="bg-white rounded-xl shadow p-6 space-y-4">
             @csrf
             <h2 class="text-xl font-semibold">Datos del Cliente</h2>
 
             <div>
                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre completo</label>
-                <input type="text" value="{{ old('nombre') }}" name="nombre" id="nombre" placeholder="Juan Pérez" required
+                <input type="text" value="{{ old('nombre') }}" name="nombre" id="nombre" placeholder="Juan Pérez"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400">
             </div>
 
             <div>
                 <label for="dui" class="block text-sm font-medium text-gray-700">DUI</label>
-                <input value="{{ old('dui') }}" type="text" name="dui" id="dui" placeholder="12345678-9" required pattern="^\d{8}-\d{1}$"
+                <input value="{{ old('dui') }}" type="text" name="dui" id="dui" placeholder="12345678-9"
                     title="El DUI debe tener 8 dígitos, un guion y un dígito final (ejemplo: 12345678-9)"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400">
             </div>
 
             <div>
                 <label for="numCard" class="block text-sm font-medium text-gray-700">Número de Tarjeta</label>
-                <input value="{{ old('numCard') }}" type="text" name="numCard" id="numCard" placeholder="1234 5678 9012 3456" required
-                    pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$"
+                <input value="{{ old('numCard') }}" type="text" name="numCard" id="numCard" placeholder="1234 5678 9012 3456"
                     title="Número de tarjeta debe ser 16 dígitos separados por espacios (ejemplo: 1234 5678 9012 3456)"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400">
             </div>
 
             <div>
                 <label for="fechaVen" class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
-                <input value="{{ old('fechaVen') }}" type="text" name="fechaVen" id="fechaVen" placeholder="MM/AA" required
-                    pattern="^(0[1-9]|1[0-2])\/\d{2}$" title="La fecha debe tener formato MM/AA (ejemplo: 08/25)"
+                <input value="{{ old('fechaVen') }}" type="text" name="fechaVen" id="fechaVen" placeholder="MM/AA" title="La fecha debe tener formato MM/AA (ejemplo: 08/25)"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400">
             </div>
 
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-                <input value="{{ old('email') }}" type="email" name="email" id="email" placeholder="correo@ejemplo.com" required
+                <input value="{{ old('email') }}" type="email" name="email" id="email" placeholder="correo@ejemplo.com"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400">
             </div>
 
             <div>
                 <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección de envío</label>
-                <textarea name="direccion" id="direccion" placeholder="Calle Falsa 123, Ciudad" rows="3" required
+                <textarea name="direccion" id="direccion" placeholder="Calle Falsa 123, Ciudad" rows="3"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-400">{{ old('direccion') }}</textarea>
             </div>
 
@@ -136,17 +134,6 @@
             </div>
         </form>
     </div>
-
-    <script>
-        function validarFormulario() {
-            const nombre = document.getElementById('nombre').value.trim();
-            if (nombre.length < 3) {
-                alert('Por favor, ingresa un nombre válido.');
-                return false;
-            }
-            return true;
-        }
-    </script>
 </body>
 
 </html>
